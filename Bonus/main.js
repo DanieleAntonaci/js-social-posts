@@ -60,8 +60,8 @@ let container = document.getElementById('container');
 let linkLikeBtn;
 let likeBtn;
 let increasLikes
-
-
+let arrayLike = [];
+let arrayLikeCounter = [];
 
 
 
@@ -112,25 +112,12 @@ posts.forEach((element, index) => {
     // });
 });
 
-let arrayLike = [];
-let arrayLikeCounter = [];
-
-
 likeBtn = document.getElementsByClassName('js-like-button');
 for (let i = 0; i < posts.length; i++) {
-    arrayLikeCounter.push(true);
 
     likeBtn[i].addEventListener('click', function () {
-        if (arrayLikeCounter[i]) {
-
-            likeBtn[i].classList.add('like-button--liked');
-            document.getElementById(`like-counter-${i + 1}`).innerHTML = `${posts[i].likes + 1}`;
-            arrayLike.push(`like-counter-${i}`);
-            console.log(arrayLike);
-            arrayLikeCounter[i] = false;
-        }
-
-        // inserimento in un array
+        likeBtn[i].classList.add('like-button--liked');
+        document.getElementById(`like-counter-${i + 1}`).innerHTML = `${posts[i].likes + 1}`;
     })
 
 
