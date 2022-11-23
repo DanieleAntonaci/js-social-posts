@@ -127,7 +127,8 @@ likeBtn = document.getElementsByClassName('js-like-button');
 for (let i = 0; i < posts.length; i++) {
     arrayLikeCounter.push(true);
 
-    likeBtn[i].addEventListener('click', function () {
+    likeBtn[i].addEventListener('click', function (e) {
+        e.preventDefault();
         if (arrayLikeCounter[i]) {
 
             likeBtn[i].classList.add('like-button--liked');
@@ -135,6 +136,12 @@ for (let i = 0; i < posts.length; i++) {
             arrayLike.push(`like-counter-${i}`);
             console.log(arrayLike);
             arrayLikeCounter[i] = false;
+        } else {
+            likeBtn[i].classList.remove('like-button--liked');
+            document.getElementById(`like-counter-${i + 1}`).innerHTML = `${posts[i].likes - 1}`;
+            arrayLike.shift(`like-counter-${i}`);
+            console.log(arrayLike);
+            arrayLikeCounter[i] = true;
         }
 
         // inserimento in un array
