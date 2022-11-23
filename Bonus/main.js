@@ -59,14 +59,20 @@ const posts = [
 let container = document.getElementById('container');
 let linkLikeBtn;
 let likeBtn;
-let increasLikes
-let arrayLike = [];
-let arrayLikeCounter = [];
+let increasLikes;
+
+
+
+
 
 
 
 // Creo un ciclo che prende l' array e lo trasforma in stringhe per l'HTML
 posts.forEach((element, index) => {
+    // modifica data
+    let parts = element.created.split('-');
+
+    let mydate = `${parts[2]}-${parts[1]}-${parts[0]}`;
 
 
     container.innerHTML += `
@@ -74,11 +80,12 @@ posts.forEach((element, index) => {
             <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src="${element.author.image}" alt="${element.author.name}">                    
+                        ${element.author.image ? `<img class="profile-pic" src="${element.author.image}" alt="${element.author.name}">` : FistLetter(element.author.name)}
+                                            
                     </div>
                     <div class="post-meta__data">
                         <div class="post-meta__author">${element.author.name}</div>
-                        <div class="post-meta__time">${element.created}</div>
+                        <div class="post-meta__time">${mydate}</div>
                     </div>                    
                 </div>
             </div>
@@ -112,13 +119,34 @@ posts.forEach((element, index) => {
     // });
 });
 
+let arrayLike = [];
+let arrayLikeCounter = [];
+
+
 likeBtn = document.getElementsByClassName('js-like-button');
 for (let i = 0; i < posts.length; i++) {
+    arrayLikeCounter.push(true);
 
     likeBtn[i].addEventListener('click', function () {
-        likeBtn[i].classList.add('like-button--liked');
-        document.getElementById(`like-counter-${i + 1}`).innerHTML = `${posts[i].likes + 1}`;
+        if (arrayLikeCounter[i]) {
+
+            likeBtn[i].classList.add('like-button--liked');
+            document.getElementById(`like-counter-${i + 1}`).innerHTML = `${posts[i].likes + 1}`;
+            arrayLike.push(`like-counter-${i}`);
+            console.log(arrayLike);
+            arrayLikeCounter[i] = false;
+        }
+
+        // inserimento in un array
     })
 
 
+};
+
+
+// function
+function FistLetter(name) {
+    let splitName = name.split(' ');
+
+    return `${splitName[0].charAt(0)} ${splitName[1].charAt(0)}`;
 }
