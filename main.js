@@ -59,11 +59,14 @@ const posts = [
 let container = document.getElementById('container');
 let linkLikeBtn;
 let likeBtn;
+let increasLikes
+let arrayLike = [];
+let arrayLikeCounter = [];
+
 
 
 // Creo un ciclo che prende l' array e lo trasforma in stringhe per l'HTML
 posts.forEach((element, index) => {
-
 
 
     container.innerHTML += `
@@ -86,7 +89,7 @@ posts.forEach((element, index) => {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-post-id="${index + 1}">
+                        <a class="like-button  js-like-button" href="#" data-postid="${index + 1}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
@@ -100,12 +103,22 @@ posts.forEach((element, index) => {
     `;
 
 
-    likeBtn = document.querySelector(`[data-post-id="${index + 1}"]`);
-    // let increasLikes = document.getElementById(`like-counter-${index + 1}`);
 
-
-    likeBtn.addEventListener('click', function () {
-        likeBtn.classList.add('like-button--liked');
-        // increasLikes.innerHTML = `${element.likes} + 1`;
-    });
+    // likeBtn.addEventListener('click', function (e) {
+    //     e.preventDefault();
+    //     console.log("dentro al btn");
+    //     arrayLike[index].classList.add('like-button--liked');
+    //     // increasLikes.innerHTML = `${element.likes} + 1`;
+    // });
 });
+
+likeBtn = document.getElementsByClassName('js-like-button');
+for (let i = 0; i < posts.length; i++) {
+
+    likeBtn[i].addEventListener('click', function () {
+        likeBtn[i].classList.add('like-button--liked');
+        document.getElementById(`like-counter-${i + 1}`).innerHTML = `${posts[i].likes + 1}`;
+    })
+
+
+}
