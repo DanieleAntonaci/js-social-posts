@@ -56,25 +56,19 @@ const posts = [
     }
 ];
 
+// container
 let container = document.getElementById('container');
-let linkLikeBtn;
-let likeBtn;
-let increasLikes;
-
-
-
-
-
 
 
 // Creo un ciclo che prende l' array e lo trasforma in stringhe per l'HTML
 posts.forEach((element, index) => {
+
     // modifica data
     let parts = element.created.split('-');
 
     let mydate = `${parts[2]}-${parts[1]}-${parts[0]}`;
 
-
+    // create element DOM
     container.innerHTML += `
         <div class="post">
             <div class="post__header">
@@ -96,64 +90,71 @@ posts.forEach((element, index) => {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="${index + 1}">
+                        <a class="like-button  js-like-button" href="#" data-postid="${element.id}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-${index + 1}" class="js-likes-counter">${element.likes}</b> persone
+                        Piace a <b id="like-counter-${element.id}" class="js-likes-counter">${element.likes}</b> persone
                     </div>
                 </div> 
             </div>            
         </div>
     `;
-
-
-
-    // likeBtn.addEventListener('click', function (e) {
-    //     e.preventDefault();
-    //     console.log("dentro al btn");
-    //     arrayLike[index].classList.add('like-button--liked');
-    //     // increasLikes.innerHTML = `${element.likes} + 1`;
-    // });
 });
 
+// referense to btn
+let likeBtn;
+
+// array 
 let arrayLike = [];
 let arrayLikeCounter = [];
 
-
+// btn
 likeBtn = document.getElementsByClassName('js-like-button');
+
+// create a loop
 for (let i = 0; i < posts.length; i++) {
     arrayLikeCounter.push(true);
 
+    // btn like
     likeBtn[i].addEventListener('click', function (e) {
         e.preventDefault();
         if (arrayLikeCounter[i]) {
-
+            // add class btn blue
             likeBtn[i].classList.add('like-button--liked');
+
+            // increase num like
             document.getElementById(`like-counter-${i + 1}`).innerHTML = `${posts[i].likes + 1}`;
-            arrayLike.push(`like-counter-${i}`);
+
+            // safe the btn to arrayLike
+            arrayLike.push(`like-counter-${posts[i].id}`);
             console.log(arrayLike);
+
+
             arrayLikeCounter[i] = false;
         } else {
+            // remove class btn blue
             likeBtn[i].classList.remove('like-button--liked');
+
+            // decreases num like
             document.getElementById(`like-counter-${i + 1}`).innerHTML = `${posts[i].likes - 1}`;
-            arrayLike.shift(`like-counter-${i}`);
+
+            // remove btn from arrayLike
+            arrayLike.shift(`like-counter-${posts[i].id}`);
             console.log(arrayLike);
             arrayLikeCounter[i] = true;
         }
-
-        // inserimento in un array
     })
 
 
 };
 
 
-// function
+// FUNCTION
+// First letter of a name
 function FistLetter(name) {
     let splitName = name.split(' ');
-
     return `${splitName[0].charAt(0)} ${splitName[1].charAt(0)}`;
-}
+};
